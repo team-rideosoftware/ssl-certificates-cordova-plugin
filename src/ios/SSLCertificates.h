@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
 
-@interface SSLCertificateChecker : CDVPlugin
+@interface SSLCertificates : CDVPlugin
 
 - (void)check:(CDVInvokedUrlCommand*)command;
 

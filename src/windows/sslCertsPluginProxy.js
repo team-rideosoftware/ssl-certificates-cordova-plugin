@@ -1,8 +1,8 @@
-cordova.commandProxy.add("SSLCertificateChecker", {
+cordova.commandProxy.add("SSLCertificates", {
 
   checkInCertChain: function(successCallback, errorCallback, params) {
     if (typeof errorCallback != "function") {
-      console.log("SSLCertificateChecker.find failure: errorCallback parameter must be a function");
+      console.log("SSLCertificates.find failure: errorCallback parameter must be a function");
       return
     }
     // note that this is entirely possible, but not implemented
@@ -15,12 +15,12 @@ cordova.commandProxy.add("SSLCertificateChecker", {
     var allowedSHA1Fingerprints = params[2];
 
     if (typeof errorCallback != "function") {
-      console.log("SSLCertificateChecker.find failure: errorCallback parameter must be a function");
+      console.log("SSLCertificates.find failure: errorCallback parameter must be a function");
       return
     }
 
     if (typeof successCallback != "function") {
-      console.log("SSLCertificateChecker.find failure: successCallback parameter must be a function");
+      console.log("SSLCertificates.find failure: successCallback parameter must be a function");
       return
     }
 

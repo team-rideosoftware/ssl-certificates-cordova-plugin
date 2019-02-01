@@ -1,17 +1,17 @@
 "use strict";
 var exec = require('cordova/exec');
 
-function SSLCertificateChecker() {
+function SSLCertificates() {
 }
 
-SSLCertificateChecker.prototype.check = function (successCallback, errorCallback, serverURL, allowedSHA1FingerprintOrArray, allowedSHA1FingerprintAlt) {
+SSLCertificates.prototype.check = function (successCallback, errorCallback, serverURL, allowedSHA1FingerprintOrArray, allowedSHA1FingerprintAlt) {
   if (typeof errorCallback != "function") {
-    console.log("SSLCertificateChecker.find failure: errorCallback parameter must be a function");
+    console.log("SSLCertificates.find failure: errorCallback parameter must be a function");
     return
   }
 
   if (typeof successCallback != "function") {
-    console.log("SSLCertificateChecker.find failure: successCallback parameter must be a function");
+    console.log("SSLCertificates.find failure: successCallback parameter must be a function");
     return
   }
 
@@ -27,18 +27,18 @@ SSLCertificateChecker.prototype.check = function (successCallback, errorCallback
   if (allowedSHA1FingerprintAlt !== undefined) {
       fpArr.push(allowedSHA1FingerprintAlt);
   }
-  exec(successCallback, errorCallback, "SSLCertificateChecker", "check", [serverURL, false, fpArr]);
+  exec(successCallback, errorCallback, "SSLCertificates", "check", [serverURL, false, fpArr]);
 };
 
-SSLCertificateChecker.prototype.checkInCertChain = function (successCallback, errorCallback, serverURL, allowedSHA1FingerprintOrArray, allowedSHA1FingerprintAlt) {
+SSLCertificates.prototype.checkInCertChain = function (successCallback, errorCallback, serverURL, allowedSHA1FingerprintOrArray, allowedSHA1FingerprintAlt) {
   if (typeof errorCallback != "function") {
-    console.log("SSLCertificateChecker.find failure: errorCallback parameter must be a function");
+    console.log("SSLCertificates.find failure: errorCallback parameter must be a function");
     return
   }
   errorCallback("This function has been removed in versions higher than 4.0.0 because it's considered too insecure.");
   /*
   if (typeof successCallback != "function") {
-    console.log("SSLCertificateChecker.find failure: successCallback parameter must be a function");
+    console.log("SSLCertificates.find failure: successCallback parameter must be a function");
     return
   }
   // if an array is not passed, transform the input into one
@@ -53,9 +53,9 @@ SSLCertificateChecker.prototype.checkInCertChain = function (successCallback, er
   if (allowedSHA1FingerprintAlt !== undefined) {
     fpArr.push(allowedSHA1FingerprintAlt);
   }
-  cordova.exec(successCallback, errorCallback, "SSLCertificateChecker", "check", [serverURL, true, fpArr]);
+  cordova.exec(successCallback, errorCallback, "SSLCertificates", "check", [serverURL, true, fpArr]);
   */
 };
 
-var sslCertificateChecker = new SSLCertificateChecker();
-module.exports = sslCertificateChecker;
+var sslCertificates = new SSLCertificates();
+module.exports = sslCertificates;
