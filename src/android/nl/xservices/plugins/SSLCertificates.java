@@ -84,7 +84,7 @@ public class SSLCertificates extends CordovaPlugin {
       jsonArray.put(jsonObject);
     }
 
-    return ja;
+    return jsonArray;
   }
 
   private static String dumpHex(byte[] data) {
