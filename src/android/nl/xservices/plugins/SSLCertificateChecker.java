@@ -2,7 +2,9 @@ package nl.xservices.plugins;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.LOG;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONException;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -12,12 +14,20 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.security.cert.CertificateEncodingException;
+import java.util.List;
+import java.util.ArrayList;
+import java.lang.String;
+import java.lang.Long;
+import java.math.BigInteger;
+
 
 public class SSLCertificateChecker extends CordovaPlugin {
 
   private static final String ACTION_CHECK_EVENT = "check";
   private static char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+  private static final String LOG_TAG = "SSLCertificateChecker";
 
   @Override
   public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -27,17 +37,12 @@ public class SSLCertificateChecker extends CordovaPlugin {
           try {
             final String serverURL = args.getString(0);
             final JSONArray allowedFingerprints = args.getJSONArray(2);
-            final String serverCertFingerprint = getFingerprint(serverURL);
-            for (int j=0; j<allowedFingerprints.length(); j++) {
-              if (allowedFingerprints.get(j).toString().equalsIgnoreCase(serverCertFingerprint)) {
-                callbackContext.success("CONNECTION_SECURE");
-                return;
-              }
-            }
-            callbackContext.error("CONNECTION_NOT_SECURE");
+            List<String> fingerprints = getFingerprints(serverURL);
+            JSONArray data = getFingerprintsJsonData(serverURL);
+            callbackContext.success(data);
+            return;
           } catch (Exception e) {
-            callbackContext.error("CONNECTION_NOT_SECURE");
-            //callbackContext.error("CONNECTION_FAILED. Details: " + e.getMessage());
+            callbackContext.error("CONNECTION_FAILED. Details: " + e.getMessage());
           }
         }
       });
@@ -48,14 +53,38 @@ public class SSLCertificateChecker extends CordovaPlugin {
     }
   }
 
-  private static String getFingerprint(String httpsURL) throws IOException, NoSuchAlgorithmException, CertificateException, CertificateEncodingException {
+  private static JSONArray getFingerprintsJsonData(String httpsURL) throws IOException, NoSuchAlgorithmException, CertificateException, CertificateEncodingException {
     final HttpsURLConnection con = (HttpsURLConnection) new URL(httpsURL).openConnection();
     con.setConnectTimeout(5000);
     con.connect();
-    final Certificate cert = con.getServerCertificates()[0];
-    final MessageDigest md = MessageDigest.getInstance("SHA256");
-    md.update(cert.getEncoded());
-    return dumpHex(md.digest());
+    JSONArray jsonArray = new JSONArray();
+    for (int i = 0; i < con.getServerCertificates().length; i++) {
+      final Certificate cert = con.getServerCertificates()[i];
+
+      // LOG.e(LOG_TAG, cert.toString());
+      final MessageDigest md = MessageDigest.getInstance("SHA256");
+      md.update(cert.getEncoded());
+      String fingerprint = dumpHex(md.digest());
+
+      JSONObject jsonObject = new JSONObject();
+      try {
+        jsonObject.put("index", i);
+        jsonObject.put("fingerprint", fingerprint);
+
+        if (cert instanceof X509Certificate) {
+          X509Certificate x = (X509Certificate ) cert;
+          // LOG.e(LOG_TAG, "Serial number: "+ x.getSerialNumber());
+          String serialNumber = (new BigInteger(x.getSerialNumber().toString(), 10)).toString(16);
+          // LOG.e(LOG_TAG, "Serial number (hex): "+ serialNumber);
+          jsonObject.put("serialNumber", serialNumber);
+        }
+      } catch (JSONException e) {
+      }
+
+      jsonArray.put(jsonObject);
+    }
+
+    return ja;
   }
 
   private static String dumpHex(byte[] data) {
