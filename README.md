@@ -1,4 +1,4 @@
-# PhoneGap SSL Certificate Checker plugin
+# PhoneGap SSL Certificate plugin
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][npm-url]
@@ -10,10 +10,10 @@
 [twitter-image]:https://img.shields.io/twitter/follow/eddyverbruggen.svg?style=social&label=Follow%20me
 [twitter-url]:https://twitter.com/eddyverbruggen
 
-1. [Description](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin#1-description)
-2. [Installation](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin#2-installation)
-3. [Usage](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin#3-usage)
-4. [Credits](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin#4-credits)
+1. [Description](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#1-description)
+2. [Installation](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#2-installation)
+3. [Usage](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#3-usage)
+4. [Credits](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#4-credits)
 
 <table width="100%">
     <tr>
