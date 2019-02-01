@@ -42,20 +42,15 @@ everytime you communicate with the server. In either case, you can add your logi
 
 ## 2. Installation
 
-Latest stable version from npm:
+Latest stable version from Github:
 ```
-$ cordova plugin add cordova-plugin-sslcertificatechecker
-```
-
-Bleeding edge version from Github:
-```
-$ cordova plugin add https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin
+$ ionic cordova plugin add https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin
 ```
 
 ### PhoneGap Build
 
 ```xml
-<gap:plugin name="cordova-plugin-sslcertificatechecker" />
+<gap:plugin name="cordova-plugin-ssl-certificates" />
 ```
 
 ## 3. Usage
@@ -68,22 +63,21 @@ You can find it f.i. by opening the server URL in Chrome. Then click the green c
 
 ```javascript
   var server = "https://build.phonegap.com";
-  var fingerprint = "C6 2D 93 39 C2 9F 82 8E 1E BE FD DC 2D 7B 7D 24 31 1A 59 E1 0B 4B C8 04 6E 21 F6 FA A2 37 11 45";
 
-  window.plugins.sslCertificateChecker.check(
+  window.plugins.sslCertificates.check(
           successCallback,
           errorCallback,
           server,
-          fingerprint);
+          []);
 
-   function successCallback(message) {
-     alert(message);
-     // Message is always: CONNECTION_SECURE.
-     // Now do something with the trusted server.
+   function successCallback(certificates) {
+     console.log(certificates);
+     // certificates = [ { serialNumber: 'xxxxxxxxxxxxxx', fingerprint: 'XX XX XX XX XX' } ]
+     // Now you can do checks with that information.
    }
 
    function errorCallback(message) {
-     alert(message);
+     console.log(message);
      if (message === "CONNECTION_NOT_SECURE") {
        // There is likely a man in the middle attack going on, be careful!
      } else if (message.indexOf("CONNECTION_FAILED") >- 1) {
@@ -91,20 +85,6 @@ You can find it f.i. by opening the server URL in Chrome. Then click the green c
      }
    }
 ```
-
-Need more than one fingerprint? In case your certificate is about to expire, you can add it already to your app, while still supporting the old certificate.
-Note you may want to force clients to update the app when the new certificate is activated.
-```javascript
-  // an array of any number of fingerprints
-  var fingerprints = ["C6 2D 93 39 C2 9F 82 8E 1E BE FD DC 2D 7B 7D 24 31 1A 59 E1 0B 4B C8 04 6E 21 F6 FA A2 37 11 45", "SE CO ND", ..];
-
-  window.plugins.sslCertificateChecker.check(
-          successCallback,
-          errorCallback,
-          server,
-          fingerprints);
-```
-
 
 ## 4. Credits
 The iOS code was inspired by a closed-source, purely native certificate pinning implementation by Rob Bosman.
