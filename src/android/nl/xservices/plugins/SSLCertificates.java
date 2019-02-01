@@ -37,7 +37,6 @@ public class SSLCertificates extends CordovaPlugin {
           try {
             final String serverURL = args.getString(0);
             final JSONArray allowedFingerprints = args.getJSONArray(2);
-            List<String> fingerprints = getFingerprints(serverURL);
             JSONArray data = getFingerprintsJsonData(serverURL);
             callbackContext.success(data);
             return;
