@@ -7,8 +7,6 @@
 [npm-image]:http://img.shields.io/npm/v/cordova-plugin-sslcertificatechecker.svg
 [npm-url]:https://npmjs.org/package/cordova-plugin-sslcertificatechecker
 [downloads-image]:http://img.shields.io/npm/dm/cordova-plugin-sslcertificatechecker.svg
-[twitter-image]:https://img.shields.io/twitter/follow/eddyverbruggen.svg?style=social&label=Follow%20me
-[twitter-url]:https://twitter.com/eddyverbruggen
 
 1. [Description](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#1-description)
 2. [Installation](https://github.com/team-rideosoftware/ssl-certificates-cordova-plugin#2-installation)
@@ -90,3 +88,5 @@ You can find it f.i. by opening the server URL in Chrome. Then click the green c
 The iOS code was inspired by a closed-source, purely native certificate pinning implementation by Rob Bosman.
 
 [Jacob Weber](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin/issues/9) did some great work to support checking multiple certificates on iOS, thanks!
+
+
